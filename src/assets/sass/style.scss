@@ -1,0 +1,73 @@
+// @import url('https://fonts.googleapis.com/css?family=Roboto:400,700,900');
+
+html {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 14px;
+}
+
+*, *::after, *::before {
+    box-sizing: border-box;
+}
+
+canvas {
+    position:fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.ui {
+    z-index: 100;
+    position: fixed;
+    top: 16px;
+    left: 16px;
+    padding: 16px;
+    background: #f1f1f1;
+    border-radius: 1px;
+
+    &__title {
+        color: #505050;
+        font-size: 16px;
+        font-weight: 900;
+        line-height: 24px;
+        margin-bottom: 16px;
+    }
+
+    &__group {
+        display: flex;
+        justify-content: space-between;
+        min-width: 175px;
+        margin-bottom: 12px;
+
+        &:last-child {    
+            margin-bottom: 0;
+        }
+
+        label {
+            display: block;
+            color: #757575;
+            font-size: 14px;
+            font-weight: 700;
+            margin-right: 16px;
+            white-space: nowrap;
+            line-height: 24px;
+        }
+
+        input[type=number] {
+            width: 64px;
+        }
+    }
+}
+
+.btn_pause, .btn_play {
+    font-weight: 700;
+}
+
+.btn_pause {
+    color: red;
+}
+
+.btn_play {
+    color: green;
+}

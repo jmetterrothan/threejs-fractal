@@ -1,0 +1,27 @@
+{
+  "name": "td2",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Jérémie Metter-Rothan",
+  "license": "MIT",
+  "dependencies": {
+    "reset-css": "^4.0.1",
+    "three-orbit-controls": "^82.1.0",
+    "three.js": "^0.77.1"
+  },
+  "devDependencies": {
+    "babel-polyfill": "^6.26.0",
+    "css-loader": "^1.0.0",
+    "html-webpack-plugin": "^3.2.0",
+    "node-sass": "^4.9.3",
+    "sass-loader": "^7.1.0",
+    "style-loader": "^0.23.0",
+    "webpack": "^4.20.1",
+    "webpack-cli": "^3.1.1",
+    "webpack-dev-server": "^3.1.9"
+  },
+  "scripts": {
+    "start": "webpack-dev-server --mode=development --watch",
+    "build": "webpack --mode=production"
+  }
+}
