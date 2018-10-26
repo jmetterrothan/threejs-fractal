@@ -1,25 +1,24 @@
 import THREE from 'three';
 
-export default class State 
+const PYRAMID_MATERIAL = new THREE.MeshLambertMaterial({ color: 0x4fb99f });
+
+export default class SierpinskyState 
 {
-    constructor(scene) {
-        this.scene = scene;
+    constructor(sceneWrapper) {
+        this.sceneWrapper = sceneWrapper;
     }
 
     init() {
         // pyramid
         const createPyramid = (x, y, z, b, h) => {
-            const geometry = new THREE.ConeGeometry(b, h, 4, 1);
-
-            const material = new THREE.MeshLambertMaterial({ color: 0xbbbbbb });
-            material.shading = THREE.FlatShading;
-
-            const mesh = new THREE.Mesh(geometry, material);
+            const geometry = new THREE.ConeBufferGeometry(b, h, 4, 1);
+            const mesh = new THREE.Mesh(geometry, PYRAMID_MATERIAL);
 
             mesh.position.set(x, y, z);
+            mesh.receiveShadow = true;
 
-            this.scene.add(mesh);
-        }
+            this.sceneWrapper.scene.add(mesh);
+        };
 
         const sierpinsky = (x, y, z, b, h, it, lvl = 0) => {
             if (it === lvl) {
@@ -42,8 +41,9 @@ export default class State
                 });
             }
         };
+        
 
-        sierpinsky(0, 0, 0, 6, 6, 4);
+        sierpinsky(0, 0, 0, 10, 10, 4);
     }
 
     update() {
