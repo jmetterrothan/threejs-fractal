@@ -1,7 +1,9 @@
 import THREE from 'three';
 
 import './OrbitControls';
-import State from './State';
+
+import MengerState from './Menger';
+import SierpinskyState from './Sierpinsky';
 
 class Scene {
     constructor() {
@@ -47,16 +49,27 @@ class Scene {
             this.renderer.setPixelRatio(window.devicePixelRatio || 1);
         });
 
+        const object = new THREE.AxisHelper();
+        object.position.set(0, 0, 0);
+        object.scale.x = object.scale.y = object.scale.z = 1;
+        this.scene.add(object);
+
         // scene basic lights
-        const ambLight = new THREE.AmbientLight(0xffffff, 0.75);
+        const ambLight = new THREE.AmbientLight(0xffffff, 0.25);
         this.scene.add(ambLight);
 
-        const light = new THREE.PointLight(0xffffff, 0.65);
-        light.position.set(0, 0, 20);
-        light.castShadow = true;
-        this.scene.add(light);
+        const spotLight = new THREE.SpotLight(0xffffff, 0.9);
+        spotLight.position.set(100, 100, 25);
 
-        this.state = new State(this.scene);
+        spotLight.castShadow = true;
+
+        spotLight.shadow.mapSize.width = 1024;
+        spotLight.shadow.mapSize.height = 1024;
+
+        this.scene.add(spotLight);
+
+
+        this.state = new SierpinskyState(this);
         this.state.init();
     }
 
