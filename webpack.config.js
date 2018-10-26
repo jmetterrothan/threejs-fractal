@@ -8,7 +8,7 @@ module.exports = {
     filename: 'bundle.js'
   },
   plugins: [new HtmlWebpackPlugin({
-    title: 'Pyramide de Sierpinsky',
+    title: 'Fractals',
     template: 'src/assets/index.html'
   })],
   module: {
