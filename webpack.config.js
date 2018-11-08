@@ -27,7 +27,13 @@ module.exports = {
           "style-loader",
           "css-loader",
       ]
-     }
+     },
+     {
+      test: /\.glsl$/,
+      use: [
+          "file-loader",
+      ]
+    }
     ]
   }
 };
