@@ -46,7 +46,7 @@ export default class SierpinskyState
 
         sierpinsky(0, 2, 0, 10, 10, 5);
 
-        this.sceneWrapper.camera.position.set(0, -2, 25);
+        this.sceneWrapper.camera.position.set(0, -2, 20);
     }
 
     update() {
