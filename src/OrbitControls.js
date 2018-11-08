@@ -1,4 +1,4 @@
-import THREE from 'three';
+import * as THREE from 'three';
 
 /**
  * @author qiao / https://github.com/qiao
