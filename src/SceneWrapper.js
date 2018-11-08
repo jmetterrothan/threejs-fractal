@@ -76,7 +76,7 @@ class SceneWrapper {
         this.stateList.push(new MengerState(this));
         this.stateList.push(new MandelbrotState(this));
 
-        this.switchState(0);
+        this.switchState(2);
     }
 
     run(delta = 0) {
