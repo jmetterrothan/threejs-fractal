@@ -18,12 +18,12 @@ export default class SierpinskyState
             mesh.receiveShadow = true;
             mesh.shouldBeDeletedOnStateChange = true;
 
-            this.sceneWrapper.scene.add(mesh);
+            return mesh;
         };
 
         const sierpinsky = (x, y, z, b, h, it, lvl = 0) => {
             if (it === lvl) {
-                createPyramid(x, y, z, b, h);
+                this.sceneWrapper.scene.add(createPyramid(x, y, z, b, h));
             }    
             else {
                 const nb = b / 2;

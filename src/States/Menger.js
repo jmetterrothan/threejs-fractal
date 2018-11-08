@@ -17,13 +17,13 @@ export default class MengerState
             mesh.receiveShadow = true;
             mesh.shouldBeDeletedOnStateChange = true;
 
-            this.sceneWrapper.scene.add(mesh);
+            return mesh;
         };
 
         const menger = (x, y, z, s, it, lvl = 0) => {
             if (it === lvl) {
-                createCube(x, y, z, s);
-            }    
+                this.sceneWrapper.scene.add(createCube(x, y, z, s));
+            }
             else {
                 const ns = s / 3;
                 
