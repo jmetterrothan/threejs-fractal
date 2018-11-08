@@ -8,10 +8,10 @@ import MandelbrotState from './States/Mandelbrot';
 
 class SceneWrapper {
     constructor() {
-        this.scene = null;
-        this.camera = null;
-        this.renderer = null;
-        this.controls = null;
+        this.scene = new THREE.Scene();
+        this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 1000);
+        this.renderer = new THREE.WebGLRenderer({ antialias: true });
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
 
         this.state = -1;
         this.stateList = [];
@@ -26,24 +26,18 @@ class SceneWrapper {
      * Main initialization of the scene
      */
     init() {
-        this.scene = new THREE.Scene();
-        this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 1000);
-
-        this.renderer = new THREE.WebGLRenderer({ antialias: true });
+        // Scene basic setup
         this.renderer.setSize(window.innerWidth, window.innerHeight);
         this.renderer.setPixelRatio(window.devicePixelRatio || 1);
         this.renderer.shadowMap.enabled = true;
-
-        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
+        
         this.controls.target.set(0, 0, 0);
         this.controls.update();
-
-        this.raycaster = new THREE.Raycaster(); 
 
         document.body.appendChild(this.renderer.domElement);
 
 
-        // window resize handler
+        // Window resize event handler
         window.addEventListener('resize', () => {
             this.camera.aspect = window.innerWidth / window.innerHeight;
             this.camera.updateProjectionMatrix();
@@ -54,12 +48,8 @@ class SceneWrapper {
             this.stateList[this.state].onResize(this.renderer.domElement.width, this.renderer.domElement.height);
         });
 
-        const object = new THREE.AxesHelper();
-        object.position.set(0, 0, 0);
-        object.scale.x = object.scale.y = object.scale.z = 1;
-        this.scene.add(object);
 
-        // scene basic lights
+        // Scene basic lights
         const ambLight = new THREE.AmbientLight(0xffffff, 0.4);
         this.scene.add(ambLight);
 
@@ -74,10 +64,12 @@ class SceneWrapper {
         this.scene.add(spotLight);
 
 
+        // Create all the available states
         this.stateList.push(new SierpinskyState(this));
         this.stateList.push(new MengerState(this));
         this.stateList.push(new MandelbrotState(this));
 
+        // Define mandelbrot state as default
         this.switchState(2);
     }
 
@@ -88,6 +80,7 @@ class SceneWrapper {
         }
 
         this.renderer.render(this.scene, this.camera);
+        
         requestAnimationFrame(this.run.bind(this));
     }
 
@@ -104,6 +97,23 @@ class SceneWrapper {
         this.running = false;
     }
 
+    /**
+     * Show axes in the center of the scene
+     * @param {number} scale Size of the gizmo
+     */
+    createAxesHelper(scale = 1) {
+        const object = new THREE.AxesHelper();
+        object.position.set(0, 0, 0);
+        object.scale.x = object.scale.y = object.scale.z = scale;
+        object.shouldBeDeletedOnStateChange = true;
+
+        this.scene.add(object);
+    }
+
+    /**
+     * Change the current state of the scene
+     * @param {State} state An object that implements the State Class (init/update/onResize)
+     */
     switchState(state) {
         this.clean();
 
@@ -120,6 +130,10 @@ class SceneWrapper {
         this.removeItem(this.scene);
     }
 
+    /**
+     * Remove all children from a given object
+     * @param {THREE.Object3D} obj
+     */
     removeItem(obj) {
         for(let i = obj.children.length - 1; i >= 0; i--) {
             if(obj.children[i].shouldBeDeletedOnStateChange === true) {
