@@ -1,6 +1,6 @@
-import THREE from 'three';
+import * as THREE from 'three';
 
-const PYRAMID_MATERIAL = new THREE.MeshLambertMaterial({ color: 0x4fb99f });
+const PYRAMID_MATERIAL = new THREE.MeshPhongMaterial({ color: 0x61dfe2, flatShading: true, shininess: 2 });
 
 export default class SierpinskyState 
 {
@@ -16,6 +16,7 @@ export default class SierpinskyState
 
             mesh.position.set(x, y, z);
             mesh.receiveShadow = true;
+            mesh.shouldBeDeletedOnStateChange = true;
 
             this.sceneWrapper.scene.add(mesh);
         };
@@ -43,7 +44,9 @@ export default class SierpinskyState
         };
         
 
-        sierpinsky(0, 0, 0, 10, 10, 4);
+        sierpinsky(0, 2, 0, 10, 10, 5);
+
+        this.sceneWrapper.camera.position.set(0, -2, 25);
     }
 
     update() {

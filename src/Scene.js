@@ -1,9 +1,10 @@
-import THREE from 'three';
+import * as THREE from 'three';
 
 import './OrbitControls';
 
-import MengerState from './Menger';
-import SierpinskyState from './Sierpinsky';
+import MengerState from './States/Menger';
+import SierpinskyState from './States/Sierpinsky';
+import MandelbrotState from './States/Mandelbrot';
 
 class Scene {
     constructor() {
@@ -11,6 +12,9 @@ class Scene {
         this.camera = null;
         this.renderer = null;
         this.controls = null;
+
+        this.state = -1;
+        this.stateList = [];
 
         this.state = null;
 
@@ -24,7 +28,6 @@ class Scene {
     init() {
         this.scene = new THREE.Scene();
         this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
-        this.camera.position.set(0, 0, 20);
 
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
         this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -49,46 +52,41 @@ class Scene {
             this.renderer.setPixelRatio(window.devicePixelRatio || 1);
         });
 
-        const object = new THREE.AxisHelper();
+        const object = new THREE.AxesHelper();
         object.position.set(0, 0, 0);
         object.scale.x = object.scale.y = object.scale.z = 1;
         this.scene.add(object);
 
         // scene basic lights
-        const ambLight = new THREE.AmbientLight(0xffffff, 0.25);
+        const ambLight = new THREE.AmbientLight(0xffffff, 0.4);
         this.scene.add(ambLight);
 
-        const spotLight = new THREE.SpotLight(0xffffff, 0.9);
-        spotLight.position.set(100, 100, 25);
+        const dirLigth = new THREE.DirectionalLight(0xffffff, 0.3);
+        this.scene.add(dirLigth);
 
+        const spotLight = new THREE.SpotLight(0xffffff, 0.75);
+        spotLight.position.set(100, 100, 50);
         spotLight.castShadow = true;
-
         spotLight.shadow.mapSize.width = 1024;
         spotLight.shadow.mapSize.height = 1024;
-
         this.scene.add(spotLight);
 
 
-        this.state = new SierpinskyState(this);
-        this.state.init();
-    }
+        this.stateList.push(new SierpinskyState(this));
+        this.stateList.push(new MengerState(this));
+        this.stateList.push(new MandelbrotState(this));
 
-    update(delta) {
-        this.controls.update(delta);
-        this.state.update();
-    }
-
-    render() {
-        this.renderer.render(this.scene, this.camera);
+        this.switchState(0);
     }
 
     run(delta = 0) {
-        requestAnimationFrame(this.run.bind(this));
-        
         if (this.running) {
-            this.update(delta);
+            this.controls.update(delta);
+            this.stateList[this.state].update(delta);
         }
-        this.render();
+
+        this.renderer.render(this.scene, this.camera);
+        requestAnimationFrame(this.run.bind(this));
     }
 
     start() {
@@ -104,12 +102,26 @@ class Scene {
         this.running = false;
     }
 
+    switchState(state) {
+        this.clean();
+
+        this.state = state;
+        this.stateList[state].init();
+    }
+
     /**
      * Removes all elements from the scene
      */
     clean() {
-        while(this.scene.children.length > 0){ 
-            this.scene.remove(this.scene.children[0]); 
+        this.removeItem(this.scene);
+    }
+
+    removeItem(obj) {
+        for(let i = obj.children.length - 1; i >= 0; i--) {
+            if(obj.children[i].shouldBeDeletedOnStateChange === true) {
+                this.removeItem(obj.children[i]);
+                obj.remove(obj.children[i]);
+            }
         }
     }
 }

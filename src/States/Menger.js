@@ -1,6 +1,6 @@
-import THREE from 'three';
+import * as THREE from 'three';
 
-const CUBE_MATERIAL = new THREE.MeshLambertMaterial({ color: 0x4fb99f });
+const CUBE_MATERIAL = new THREE.MeshPhongMaterial({ color: 0x61dfe2, flatShading: true, shininess: 2 });
 
 export default class MengerState 
 {
@@ -14,6 +14,8 @@ export default class MengerState
             const mesh = new THREE.Mesh(geometry, CUBE_MATERIAL);
 
             mesh.position.set(x, y, z);
+            mesh.receiveShadow = true;
+            mesh.shouldBeDeletedOnStateChange = true;
 
             this.sceneWrapper.scene.add(mesh);
         };
@@ -38,6 +40,15 @@ export default class MengerState
         };
 
         menger(-1.5, -1.5, -1.5, 3, 3);
+
+
+        const spotLight = new THREE.SpotLight(0xffffff, 0.2);
+        spotLight.position.set(0, 100, 50);
+        spotLight.castShadow = true;
+        spotLight.shouldBeDeletedOnStateChange = true;
+        this.sceneWrapper.scene.add(spotLight);
+
+        this.sceneWrapper.camera.position.set(-5, 4, 5);
     }
 
     update() {
