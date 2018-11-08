@@ -1,6 +1,6 @@
 import * as THREE from 'three';
 
-import './OrbitControls';
+import OrbitControls from 'three-orbitcontrols';
 
 import MengerState from './States/Menger';
 import SierpinskyState from './States/Sierpinsky';
@@ -34,7 +34,7 @@ class SceneWrapper {
         this.renderer.setPixelRatio(window.devicePixelRatio || 1);
         this.renderer.shadowMap.enabled = true;
 
-        this.controls = new THREE.OrbitControls(this.camera, this.renderer.domElement);
+        this.controls = new OrbitControls(this.camera, this.renderer.domElement);
         this.controls.center.set(0, 0, 0);
         this.controls.update();
 

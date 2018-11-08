@@ -3942,9 +3942,9 @@ tar@^4:
     safe-buffer "^5.1.2"
     yallist "^3.0.2"
 
-three-orbit-controls@^82.1.0:
-  version "82.1.0"
-  resolved "https://registry.yarnpkg.com/three-orbit-controls/-/three-orbit-controls-82.1.0.tgz#11a7f33d0a20ecec98f098b37780f6537374fab4"
+three-orbitcontrols@^2.96.3:
+  version "2.96.3"
+  resolved "https://registry.yarnpkg.com/three-orbitcontrols/-/three-orbitcontrols-2.96.3.tgz#52f7e33462561aa9d751bbaf0f1b23b7f04aa834"
 
 three@^0.98.0:
   version "0.98.0"

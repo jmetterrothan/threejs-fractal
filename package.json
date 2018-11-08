@@ -7,7 +7,7 @@
   "dependencies": {
     "reset-css": "^4.0.1",
     "three": "^0.98.0",
-    "three-orbit-controls": "^82.1.0"
+    "three-orbitcontrols": "^2.96.3"
   },
   "devDependencies": {
     "babel-polyfill": "^6.26.0",
