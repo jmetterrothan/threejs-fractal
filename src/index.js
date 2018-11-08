@@ -1,9 +1,9 @@
 import 'reset-css';
 import './assets/sass/style.scss';
 
-import Scene from './Scene';
+import SceneWrapper from './SceneWrapper';
 
-const scene = new Scene();
+const scene = new SceneWrapper();
 
 scene.init();
 scene.start();

@@ -6,7 +6,7 @@ import MengerState from './States/Menger';
 import SierpinskyState from './States/Sierpinsky';
 import MandelbrotState from './States/Mandelbrot';
 
-class Scene {
+class SceneWrapper {
     constructor() {
         this.scene = null;
         this.camera = null;
@@ -126,4 +126,4 @@ class Scene {
     }
 }
 
-export default Scene;
+export default SceneWrapper;
