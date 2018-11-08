@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 
+import State from './State';
+
 const CUBE_MATERIAL = new THREE.MeshPhongMaterial({ color: 0x61dfe2, flatShading: true, shininess: 2 });
 
 export default class MengerState 

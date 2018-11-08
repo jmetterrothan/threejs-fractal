@@ -1,5 +1,7 @@
 import * as THREE from 'three';
 
+import State from './State';
+
 import mandelbrotVs from '../assets/shaders/mandelbrot.vs.glsl';
 import mandelbrotFs from '../assets/shaders/mandelbrot.fs.glsl';
 
