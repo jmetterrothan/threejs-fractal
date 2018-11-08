@@ -41,7 +41,6 @@ export default class MengerState
 
         menger(-1.5, -1.5, -1.5, 3, 3);
 
-
         const spotLight = new THREE.SpotLight(0xffffff, 0.2);
         spotLight.position.set(0, 100, 50);
         spotLight.castShadow = true;
@@ -53,5 +52,9 @@ export default class MengerState
 
     update() {
         
+    }
+
+    onResize(w, h) {
+
     }
 }

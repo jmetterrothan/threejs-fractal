@@ -52,4 +52,8 @@ export default class SierpinskyState
     update() {
         
     }
+
+    onResize(w, h) {
+
+    }
 }

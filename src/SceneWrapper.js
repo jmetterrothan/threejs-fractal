@@ -27,7 +27,7 @@ class SceneWrapper {
      */
     init() {
         this.scene = new THREE.Scene();
-        this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        this.camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.01, 1000);
 
         this.renderer = new THREE.WebGLRenderer({ antialias: true });
         this.renderer.setSize(window.innerWidth, window.innerHeight);
@@ -35,7 +35,7 @@ class SceneWrapper {
         this.renderer.shadowMap.enabled = true;
 
         this.controls = new OrbitControls(this.camera, this.renderer.domElement);
-        this.controls.center.set(0, 0, 0);
+        this.controls.target.set(0, 0, 0);
         this.controls.update();
 
         this.raycaster = new THREE.Raycaster(); 
@@ -50,6 +50,8 @@ class SceneWrapper {
         
             this.renderer.setSize(window.innerWidth, window.innerHeight);
             this.renderer.setPixelRatio(window.devicePixelRatio || 1);
+
+            this.stateList[this.state].onResize(this.renderer.domElement.width, this.renderer.domElement.height);
         });
 
         const object = new THREE.AxesHelper();
@@ -104,6 +106,8 @@ class SceneWrapper {
 
     switchState(state) {
         this.clean();
+
+        this.controls.enabled = true;
 
         this.state = state;
         this.stateList[state].init();
