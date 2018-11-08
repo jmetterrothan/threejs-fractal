@@ -5,12 +5,8 @@ import State from './State';
 import mandelbrotVs from '../assets/shaders/mandelbrot.vs.glsl';
 import mandelbrotFs from '../assets/shaders/mandelbrot.fs.glsl';
 
-export default class MandelbrotState 
+export default class MandelbrotState extends State
 {
-    constructor(sceneWrapper) {
-        this.sceneWrapper = sceneWrapper; 
-    }
-
     init() {
         const canvas = this.sceneWrapper.renderer.domElement;
 
